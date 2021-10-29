@@ -4,7 +4,7 @@ const cors = require('cors');
 
 require('dotenv').config();
 const app = express();
-const port = process.env.PORT || 5002;
+const port = process.env.PORT || 5000;
 
 //middleware
 app.use(cors());
@@ -26,6 +26,9 @@ run().catch(console.dir);
 
 app.get('/', (req, res) => {
     res.send("Travelo Server Is Running")
+})
+app.get('/hello', (req, res) => {
+    res.send("Hello Server Is Running")
 })
 
 app.listen(port, () => {
