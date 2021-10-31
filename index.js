@@ -28,6 +28,21 @@ async function run() {
             const services = await cursor.toArray();
             res.json(services);
         })
+        //get or load my orders
+        app.get('/orders', async (req, res) => {
+            const cursor = ordersCollection.find({});
+            const orders = await cursor.toArray();
+            res.json(orders);
+        })
+
+        //delete my orders
+
+        app.delete('/orders/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await ordersCollection.deleteOne(query);
+            res.json(result);
+        })
 
         //get selected service
         app.get('/services/:id', async (req, res) => {
@@ -41,6 +56,13 @@ async function run() {
         app.post('/services', async (req, res) => {
             const service = req.body;
             const result = await servicesCollection.insertOne(service);
+            res.json(result);
+        })
+
+        //posting order information
+        app.post('/orders', async (req, res) => {
+            const orderDetails = req.body;
+            const result = await ordersCollection.insertOne(orderDetails);
             res.json(result);
         })
     }
