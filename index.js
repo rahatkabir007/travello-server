@@ -21,7 +21,7 @@ async function run() {
         const database = client.db('travelo');
         const servicesCollection = database.collection('services');
         const ordersCollection = database.collection('orders');
-        
+
         //get or load addServices
         app.get('/services', async (req, res) => {
             const cursor = servicesCollection.find({});
@@ -32,6 +32,14 @@ async function run() {
         app.get('/orders', async (req, res) => {
             const cursor = ordersCollection.find({});
             const orders = await cursor.toArray();
+            res.json(orders);
+        })
+
+        //get selected orders
+        app.get('/orders/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const orders = await ordersCollection.findOne(query);
             res.json(orders);
         })
 
